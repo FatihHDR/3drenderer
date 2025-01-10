@@ -56,5 +56,5 @@ Three.js for providing the library that makes 3D rendering possible.
 Inspiration from various online resources and tutorials.
 
 ## Contact
-For any questions or feedback, feel free to reach out to me at your-email@example.com.
+For any questions or feedback, feel free to reach out to me at fatahillah.alt@gmail.com.
 
