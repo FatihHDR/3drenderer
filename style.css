@@ -49,17 +49,37 @@ z-index: 10; /* Ensure intro is above other elements */
     right: 20px;
     background: rgba(30, 30, 30, 0.9);
     color: #f0f0f0;
-    padding: 20px;
+    padding: 10px;
     border-radius: 10px;
     max-height: 90vh;
     overflow-y: auto;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
     width: 300px; /* Fixed width for controls */
 }
+
+.controls-content {
+    display: block; /* Show controls by default */
+}
+
+.toggle-button {
+    background: #007BFF; /* Blue button */
+    border: none;
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-bottom: 10px; /* Space below the toggle button */
+    transition: background 0.3s; /* Smooth transition for hover effect */
+}
+
+.toggle-button:hover {
+    background: #0056b3; /* Darker blue on hover */
+}
+
 .shapes-grid {
-display: grid;
-grid-template-columns: repeat(2, 1fr); /* Dua kolom */
-gap: 10px; /* Jarak antar tombol */
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Two columns */
+    gap: 10px; /* Space between buttons */
 }
 
 .control-group {

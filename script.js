@@ -194,6 +194,10 @@ document.getElementById('addPrism').addEventListener('click', addPrism);
 document.getElementById('addOctahedron').addEventListener('click', addOctahedron);
 document.getElementById('addTorusKnot').addEventListener('click', addTorusKnot);
 document.getElementById('toggleWireframe').addEventListener('click', toggleWireframe);
+document.getElementById('toggleControls').addEventListener('click', function() {
+    const controlsContent = document.querySelector('.controls-content');
+    controlsContent.classList.toggle('hidden'); // Toggle the hidden class
+});
 
 // Rotation and scale controls
 document.getElementById('rotationX').addEventListener('input', (e) => {
