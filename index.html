@@ -59,16 +59,45 @@
     right: 20px;
     background: rgba(30, 30, 30, 0.9);
     color: #f0f0f0;
-    padding: 10px;
+    padding: 10px; /* Reduce padding */
     border-radius: 10px;
-    max-height: 90vh;
+    max-height: 80vh; /* Adjust max height */
     overflow-y: auto;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-    width: 300px; /* Fixed width for controls */
+    width: 250px; /* Reduce width */
 }
 
-.controls-content {
-    display: block; /* Show controls by default */
+.toggle-button {
+    background: #007BFF; /* Blue button */
+    border: none;
+    color: white;
+    padding: 8px; /* Reduce padding */
+    border-radius: 8px;
+    cursor: pointer;
+    margin-bottom: 10px; /* Space below the toggle button */
+    transition: background 0.3s; /* Smooth transition for hover effect */
+    font-size: 0.9em; /* Slightly smaller font size */
+}
+
+.shapes-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Two columns */
+    gap: 8px; /* Reduce space between buttons */
+}
+
+.control-group label {
+    font-size: 0.9em; /* Smaller font size for labels */
+}
+
+.control-group p {
+    font-size: 0.9em; /* Smaller font size for credits */
+}
+
+input[type="range"],
+input[type="number"],
+button {
+    padding: 8px; /* Reduce padding for inputs and buttons */
+    font-size: 0.9em; /* Smaller font size for inputs and buttons */
 }
 
 .toggle-button {
