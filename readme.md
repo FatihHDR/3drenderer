@@ -30,20 +30,20 @@ To run the 3D Graphics Renderer locally, follow these steps:
    cd 3D-Graphics-Renderer
    ```
 3. **Open the index.html file in your web browser**:
-- You can simply double-click the index.html file or use a local server for better performance.
+   - You can simply double-click the index.html file or use a local server for better performance.
 If you have Python installed, you can run a simple HTTP server:
-- For Python 3:
+   - For Python 3:
    ```bash
    python -m http.server
    ```
-- Then, open your browser and go to http://localhost:8000.
+   - Then, open your browser and go to http://localhost:8000.
 
 4. **Usage**
-- Click on the buttons to add shapes to the scene.
-- Use the sliders to adjust rotation and scale.
-- Check the "Auto" checkbox to enable automatic rotation for each axis.
-- Click on an object to select it, and then use the delete button to remove it from the scene.
-- Toggle wireframe mode to see the underlying geometry of the shapes.
+   - Click on the buttons to add shapes to the scene.
+   - Use the sliders to adjust rotation and scale.
+   - Check the "Auto" checkbox to enable automatic rotation for each axis.
+   - Click on an object to select it, and then use the delete button to remove it from the scene.
+   - Toggle wireframe mode to see the underlying geometry of the shapes.
 
 ## Contributing
 Contributions are welcome! If you have suggestions for improvements or new features, feel free to open an issue or submit a pull request.
