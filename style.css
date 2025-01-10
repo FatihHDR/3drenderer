@@ -6,24 +6,34 @@ body {
     overflow: hidden; /* Prevent scrolling */
 }
 #intro {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: rgb(0, 0, 0); 
-    opacity:  1;
-    transition: opacity 1s ease; /* Fade effect */
-    z-index: 10; /* Ensure intro is above other elements */
+position: fixed;
+top: 0;
+left: 0;
+width: 100vw;
+height: 100vh;
+display: flex;
+justify-content: center;
+align-items: center;
+background: rgb(0, 0, 0); 
+opacity: 1;
+transition: opacity 1s ease; /* Fade effect */
+z-index: 10; /* Ensure intro is above other elements */
 }
+
+.intro-content {
+    text-align: center; /* Center the text */
+}
+
 #intro h1 {
     font-size: 3em; /* Increased font size for emphasis */
-    text-align: center;
     margin: 0;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Subtle text shadow */
+}
+
+#intro p {
+    font-size: 1.2em; /* Slightly larger font size for credits */
+    color: #e0e0e0; /* Softer light text color */
+    margin-top: 20px; /* Add some space above the credits */
 }
 
 #renderer {
@@ -47,9 +57,9 @@ body {
     width: 300px; /* Fixed width for controls */
 }
 .shapes-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Dua kolom */
-    gap: 10px; /* Jarak antar tombol */
+display: grid;
+grid-template-columns: repeat(2, 1fr); /* Dua kolom */
+gap: 10px; /* Jarak antar tombol */
 }
 
 .control-group {
@@ -100,10 +110,10 @@ button:disabled {
     cursor: not-allowed;
 }
 .checkbox-group {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin: 5px 0;
+display: flex;
+align-items: center;
+gap: 10px;
+margin: 5px 0;
 }
 
 .checkbox-group label {

@@ -14,24 +14,34 @@
             overflow: hidden; /* Prevent scrolling */
         }
         #intro {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: rgb(0, 0, 0); 
-            opacity: 1;
-            transition: opacity 1s ease; /* Fade effect */
-            z-index: 10; /* Ensure intro is above other elements */
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: rgb(0, 0, 0); 
+        opacity: 1;
+        transition: opacity 1s ease; /* Fade effect */
+        z-index: 10; /* Ensure intro is above other elements */
         }
+
+        .intro-content {
+            text-align: center; /* Center the text */
+        }
+
         #intro h1 {
             font-size: 3em; /* Increased font size for emphasis */
-            text-align: center;
             margin: 0;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Subtle text shadow */
+        }
+
+        #intro p {
+            font-size: 1.2em; /* Slightly larger font size for credits */
+            color: #e0e0e0; /* Softer light text color */
+            margin-top: 20px; /* Add some space above the credits */
         }
 
         #renderer {
@@ -141,10 +151,12 @@
     </style>
 
 </head>
-<body>
-    <div id="intro">
+<div id="intro">
+    <div class="intro-content">
         <h1>Welcome to my 3D Render Pipeline app :)</h1>
+        <p>Created by: <strong>Fatahillah Al-Fatih</strong></p>
     </div>
+</div>
 
     <canvas id="renderer"></canvas>
     <div id="controls">
