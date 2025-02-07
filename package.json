@@ -1,0 +1,12 @@
+{
+    "name": "3d-graphics-renderer",
+    "version": "1.0.0",
+    "description": "3D Graphics Renderer using Three.js",
+    "main": "index.js",
+    "scripts": {
+      "start": "node script.js"
+    },
+    "dependencies": {
+      "three": "^0.128.0"
+    }
+  }

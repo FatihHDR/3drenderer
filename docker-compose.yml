@@ -1,0 +1,13 @@
+services:
+  web:
+    build: .
+    ports:
+      - "80:80"
+    volumes:
+      - .:/usr/src/app
+    command: npm start
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
