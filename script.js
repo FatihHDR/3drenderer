@@ -151,8 +151,55 @@ function addTorusKnot() {
     addObjectToScene(torusKnot);
 }
 
-  // Modify the click handler to update UI
-  renderer.domElement.addEventListener('click', (event) => {
+// 4D Renderer Functions
+function addHyperCube() {
+    const vertices = [
+        [-1, -1, -1, -1], [1, -1, -1, -1], [1, 1, -1, -1], [-1, 1, -1, -1],
+        [-1, -1, 1, -1], [1, -1, 1, -1], [1, 1, 1, -1], [-1, 1, 1, -1],
+        [-1, -1, -1, 1], [1, -1, -1, 1], [1, 1, -1, 1], [-1, 1, -1, 1],
+        [-1, -1, 1, 1], [1, -1, 1, 1], [1, 1, 1, 1], [-1, 1, 1, 1]
+    ];
+
+    const edges = [
+        [0, 1], [1, 2], [2, 3], [3, 0],
+        [4, 5], [5, 6], [6, 7], [7, 4],
+        [0, 4], [1, 5], [2, 6], [3, 7],
+        [8, 9], [9, 10], [10, 11], [11, 8],
+        [12, 13], [13, 14], [14, 15], [15, 12],
+        [8, 12], [9, 13], [10, 14], [11, 15],
+        [0, 8], [1, 9], [2, 10], [3, 11],
+        [4, 12], [5, 13], [6, 14], [7, 15]
+    ];
+
+    const material = new THREE.LineBasicMaterial({ color: 0xffffff });
+    const geometry = new THREE.BufferGeometry();
+
+    const positions = new Float32Array(edges.length * 6);
+
+    function project4Dto3D(vertex) {
+        const w = 2; // Distance of the 4D point from the 3D space
+        const scale = 1 / (w - vertex[3]);
+        return [
+            vertex[0] * scale,
+            vertex[1] * scale,
+            vertex[2] * scale
+        ];
+    }
+
+    for (let i = 0; i < edges.length; i++) {
+        const start = project4Dto3D(vertices[edges[i][0]]);
+        const end = project4Dto3D(vertices[edges[i][1]]);
+        positions.set(start, i * 6);
+        positions.set(end, i * 6 + 3);
+    }
+
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    const hypercube = new THREE.LineSegments(geometry, material);
+    addObjectToScene(hypercube);
+}
+
+// Modify the click handler to update UI
+renderer.domElement.addEventListener('click', (event) => {
     mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
     mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
@@ -193,6 +240,7 @@ document.getElementById('addTorus').addEventListener('click', addTorus);
 document.getElementById('addPrism').addEventListener('click', addPrism);
 document.getElementById('addOctahedron').addEventListener('click', addOctahedron);
 document.getElementById('addTorusKnot').addEventListener('click', addTorusKnot);
+document.getElementById('addHyperCube').addEventListener('click', addHyperCube);
 document.getElementById('toggleWireframe').addEventListener('click', toggleWireframe);
 document.getElementById('toggleControls').addEventListener('click', function() {
     const controlsContent = document.querySelector('.controls-content');
