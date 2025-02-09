@@ -151,7 +151,7 @@ function addTorusKnot() {
     addObjectToScene(torusKnot);
 }
 
-// 4D Renderer Functions
+// Hypercube
 function addHyperCube() {
     const vertices = [
         [-1, -1, -1, -1], [1, -1, -1, -1], [1, 1, -1, -1], [-1, 1, -1, -1],
@@ -253,40 +253,33 @@ function addStellatedDodecahedron() {
         return new THREE.Vector3().crossVectors(v1, v2).normalize();
     });
 
-    const stellationHeight = 0.6; // Adjusted for better proportions
+    const stellationHeight = 0.6;
     const pyramidTips = faceCenters.map((center, i) => 
         center.clone().add(faceNormals[i].multiplyScalar(stellationHeight))
     );
 
-    // Prepare vertices and indices for the stellated geometry
     const vertices = [];
     const newIndices = [];
 
-    // Add all vertices from base geometry
     baseVertices.forEach(vertex => {
         vertices.push(vertex.x, vertex.y, vertex.z);
     });
 
-    // Add pyramid tips
     pyramidTips.forEach(tip => {
         vertices.push(tip.x, tip.y, tip.z);
     });
 
-    // Add original faces
     for (let i = 0; i < indices.length; i += 3) {
         newIndices.push(indices[i], indices[i + 1], indices[i + 2]);
     }
 
-    // Create pyramid faces
     faces.forEach((face, faceIndex) => {
         const tipIndex = baseVertices.length + faceIndex;
         
-        // Get indices of the current face vertices
         const i0 = baseVertices.indexOf(face[0]);
         const i1 = baseVertices.indexOf(face[1]);
         const i2 = baseVertices.indexOf(face[2]);
 
-        // Create three triangles for each pyramid face
         newIndices.push(
             i0, i1, tipIndex,
             i1, i2, tipIndex,
@@ -294,7 +287,6 @@ function addStellatedDodecahedron() {
         );
     });
 
-    // Set geometry attributes
     stellatedGeometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
     stellatedGeometry.setIndex(newIndices);
     stellatedGeometry.computeVertexNormals();
