@@ -1,12 +1,12 @@
 window.onload = function() {
     setTimeout(() => {
         const intro = document.getElementById('intro');
-        intro.style.opacity = '0'; // Start fading out
+        intro.style.opacity = '0';
         setTimeout(() => {
-            intro.style.display = 'none'; // Hide intro after fade out
-            document.getElementById('renderer').style.display = 'block'; // Show renderer
-        }, 1000); // Match this duration with the CSS transition duration
-    }, 2000); // Duration before starting the fade out
+            intro.style.display = 'none';
+            document.getElementById('renderer').style.display = 'block';
+        }, 1000);
+    }, 2000);
 };
 
 const scene = new THREE.Scene();
@@ -177,7 +177,7 @@ function addHyperCube() {
     const positions = new Float32Array(edges.length * 6);
 
     function project4Dto3D(vertex) {
-        const w = 2; // Distance of the 4D point from the 3D space
+        const w = 2;
         const scale = 1 / (w - vertex[3]);
         return [
             vertex[0] * scale,
@@ -198,7 +198,6 @@ function addHyperCube() {
     addObjectToScene(hypercube);
 }
 
-// Modify the click handler to update UI
 renderer.domElement.addEventListener('click', (event) => {
     mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
     mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
@@ -214,7 +213,13 @@ renderer.domElement.addEventListener('click', (event) => {
     }
 });
 
-// Control functions
+function addDodecahedron() {
+    const geometry = new THREE.DodecahedronGeometry(0.5);
+    const material = createMaterial();
+    const dodecahedron = new THREE.Mesh(geometry, material);
+    addObjectToScene(dodecahedron);
+}
+
 function updateControlValues() {
     if (selectedObject) {
         document.getElementById('rotationX').value = THREE.MathUtils.radToDeg(selectedObject.rotation.x);
@@ -231,7 +236,6 @@ function toggleWireframe() {
     });
 }
 
-// Event listeners
 document.getElementById('addCube').addEventListener('click', addCube);
 document.getElementById('addSphere').addEventListener('click', addSphere);
 document.getElementById('addCylinder').addEventListener('click', addCylinder);
@@ -241,13 +245,13 @@ document.getElementById('addPrism').addEventListener('click', addPrism);
 document.getElementById('addOctahedron').addEventListener('click', addOctahedron);
 document.getElementById('addTorusKnot').addEventListener('click', addTorusKnot);
 document.getElementById('addHyperCube').addEventListener('click', addHyperCube);
+document.getElementById('addDodecahedron').addEventListener('click', addDodecahedron);
 document.getElementById('toggleWireframe').addEventListener('click', toggleWireframe);
 document.getElementById('toggleControls').addEventListener('click', function() {
     const controlsContent = document.querySelector('.controls-content');
-    controlsContent.classList.toggle('hidden'); // Toggle the hidden class
+    controlsContent.classList.toggle('hidden');
 });
 
-// Rotation and scale controls
 document.getElementById('rotationX').addEventListener('input', (e) => {
     if (selectedObject) {
         selectedObject.rotation.x = THREE.MathUtils.degToRad(parseFloat(e.target.value));
