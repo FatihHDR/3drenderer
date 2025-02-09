@@ -86,7 +86,7 @@ function updateControlsState() {
 
 deleteButton.addEventListener('click', deleteSelectedObject);
 
-function addObjectToScene(object, type) {
+function addObjectToScene(object) {
     scene.add(object);
     objects.push(object);
     selectedObject = object;
@@ -220,6 +220,132 @@ function addDodecahedron() {
     addObjectToScene(dodecahedron);
 }
 
+function addStellatedDodecahedron() {
+    const baseGeometry = new THREE.DodecahedronGeometry(0.5);
+    const stellatedGeometry = new THREE.BufferGeometry();
+    
+    const positionAttribute = baseGeometry.getAttribute('position');
+    const baseVertices = [];
+    for (let i = 0; i < positionAttribute.count; i++) {
+        const vertex = new THREE.Vector3().fromBufferAttribute(positionAttribute, i);
+        baseVertices.push(vertex);
+    }
+
+    const indices = baseGeometry.getIndex().array;
+    const faces = [];
+    for (let i = 0; i < indices.length; i += 3) {
+        faces.push([
+            baseVertices[indices[i]],
+            baseVertices[indices[i + 1]],
+            baseVertices[indices[i + 2]]
+        ]);
+    }
+
+    const faceCenters = faces.map(face => {
+        const center = new THREE.Vector3();
+        face.forEach(vertex => center.add(vertex));
+        return center.divideScalar(3);
+    });
+
+    const faceNormals = faces.map(face => {
+        const v1 = face[1].clone().sub(face[0]);
+        const v2 = face[2].clone().sub(face[0]);
+        return new THREE.Vector3().crossVectors(v1, v2).normalize();
+    });
+
+    const stellationHeight = 0.6; // Adjusted for better proportions
+    const pyramidTips = faceCenters.map((center, i) => 
+        center.clone().add(faceNormals[i].multiplyScalar(stellationHeight))
+    );
+
+    // Prepare vertices and indices for the stellated geometry
+    const vertices = [];
+    const newIndices = [];
+
+    // Add all vertices from base geometry
+    baseVertices.forEach(vertex => {
+        vertices.push(vertex.x, vertex.y, vertex.z);
+    });
+
+    // Add pyramid tips
+    pyramidTips.forEach(tip => {
+        vertices.push(tip.x, tip.y, tip.z);
+    });
+
+    // Add original faces
+    for (let i = 0; i < indices.length; i += 3) {
+        newIndices.push(indices[i], indices[i + 1], indices[i + 2]);
+    }
+
+    // Create pyramid faces
+    faces.forEach((face, faceIndex) => {
+        const tipIndex = baseVertices.length + faceIndex;
+        
+        // Get indices of the current face vertices
+        const i0 = baseVertices.indexOf(face[0]);
+        const i1 = baseVertices.indexOf(face[1]);
+        const i2 = baseVertices.indexOf(face[2]);
+
+        // Create three triangles for each pyramid face
+        newIndices.push(
+            i0, i1, tipIndex,
+            i1, i2, tipIndex,
+            i2, i0, tipIndex
+        );
+    });
+
+    // Set geometry attributes
+    stellatedGeometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+    stellatedGeometry.setIndex(newIndices);
+    stellatedGeometry.computeVertexNormals();
+
+    const material = createMaterial();
+    const stellatedDodecahedron = new THREE.Mesh(stellatedGeometry, material);
+    addObjectToScene(stellatedDodecahedron);
+}
+
+function addMengerSponge(iterations = 3) {
+    const sponge = new THREE.Group();
+    const material = new THREE.MeshPhongMaterial({ color: 0x00ff00 }); // Set the color to green
+
+    function createBox(x, y, z, size) {
+        const geometry = new THREE.BoxGeometry(size, size, size);
+        const box = new THREE.Mesh(geometry, material);
+        box.position.set(x, y, z);
+        return box;
+    }
+
+    function divideBox(box, iterations) {
+        if (iterations === 0) {
+            sponge.add(box);
+        } else {
+            const newSize = box.geometry.parameters.width / 3;
+            const positions = [-1, 0, 1];
+            positions.forEach(i => {
+                positions.forEach(j => {
+                    positions.forEach(k => {
+                        const sum = Math.abs(i) + Math.abs(j) + Math.abs(k);
+                        if (sum > 1) {
+                            const newBox = createBox(
+                                box.position.x + i * newSize,
+                                box.position.y + j * newSize,
+                                box.position.z + k * newSize,
+                                newSize
+                            );
+                            divideBox(newBox, iterations - 1);
+                        }
+                    });
+                });
+            });
+        }
+    }
+
+    const initialBox = createBox(0, 0, 0, 1);
+    divideBox(initialBox, iterations);
+
+    addObjectToScene(sponge);
+}
+
 function updateControlValues() {
     if (selectedObject) {
         document.getElementById('rotationX').value = THREE.MathUtils.radToDeg(selectedObject.rotation.x);
@@ -246,6 +372,8 @@ document.getElementById('addOctahedron').addEventListener('click', addOctahedron
 document.getElementById('addTorusKnot').addEventListener('click', addTorusKnot);
 document.getElementById('addHyperCube').addEventListener('click', addHyperCube);
 document.getElementById('addDodecahedron').addEventListener('click', addDodecahedron);
+document.getElementById('addStellatedDodecahedron').addEventListener('click', addStellatedDodecahedron);
+document.getElementById('addMengerSponge').addEventListener('click', () => addMengerSponge(3));
 document.getElementById('toggleWireframe').addEventListener('click', toggleWireframe);
 document.getElementById('toggleControls').addEventListener('click', function() {
     const controlsContent = document.querySelector('.controls-content');
