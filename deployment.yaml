@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 3d-renderer-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: 3d-renderer
+  template:
+    metadata:
+      labels:
+        app: 3d-renderer
+    spec:
+      containers:
+      - name: 3d-renderer
+        image: narut/3d-renderer:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 3000

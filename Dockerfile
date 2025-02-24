@@ -11,7 +11,9 @@ COPY package*.json ./
 RUN npm install -g http-server && \
     npm install && \
     npm list -g http-server && \
-    npm cache clean --force
+    npm cache clean --force && \
+    apk add --no-cache curl
+
 
 # Copy application files
 COPY . .
